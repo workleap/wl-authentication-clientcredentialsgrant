@@ -8,6 +8,7 @@
     <Nullable>enable</Nullable>
     <AnalysisLevel>latest-All</AnalysisLevel>
     <ImplicitUsings>enable</ImplicitUsings>
+    <NoWarn>NU5123;$(NoWarn)</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
