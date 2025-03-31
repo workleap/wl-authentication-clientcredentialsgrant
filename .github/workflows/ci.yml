@@ -58,13 +58,3 @@ jobs:
         env:
           NUGET_SOURCE: ${{ secrets.NUGET_GSOFTDEV_FEED_URL }}
           NUGET_API_KEY: ${{ steps.get_secrets.outputs.ado_pat }}
-
-
-
-
-
-
-
-
-
-
