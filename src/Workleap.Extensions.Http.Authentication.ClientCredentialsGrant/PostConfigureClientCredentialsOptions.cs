@@ -1,4 +1,4 @@
-﻿using System.Security.Cryptography;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Options;
 
@@ -6,7 +6,7 @@ namespace Workleap.Extensions.Http.Authentication.ClientCredentialsGrant;
 
 internal sealed class PostConfigureClientCredentialsOptions : IPostConfigureOptions<ClientCredentialsOptions>
 {
-    public void PostConfigure(string name, ClientCredentialsOptions options)
+    public void PostConfigure(string? name, ClientCredentialsOptions options)
     {
         if (string.IsNullOrEmpty(options.CacheKey))
         {
