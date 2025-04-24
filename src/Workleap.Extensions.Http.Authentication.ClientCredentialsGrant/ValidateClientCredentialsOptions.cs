@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Options;
 
 namespace Workleap.Extensions.Http.Authentication.ClientCredentialsGrant;
 
 internal sealed class ValidateClientCredentialsOptions : IValidateOptions<ClientCredentialsOptions>
 {
-    public ValidateOptionsResult Validate(string name, ClientCredentialsOptions options)
+    public ValidateOptionsResult Validate(string? name, ClientCredentialsOptions options)
     {
         var errors = new List<string>();
 
