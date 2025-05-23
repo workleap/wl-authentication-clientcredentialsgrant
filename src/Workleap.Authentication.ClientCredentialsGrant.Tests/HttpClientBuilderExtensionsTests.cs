@@ -1,4 +1,4 @@
-﻿using Workleap.Extensions.Http.Authentication.ClientCredentialsGrant;
+using Workleap.Extensions.Http.Authentication.ClientCredentialsGrant;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Http;
 using Microsoft.Extensions.Http.Logging;
@@ -19,13 +19,13 @@ public class HttpClientBuilderExtensionsTests
             .AddClientCredentialsHandler(ConfigureFakeOptions)
             .AddClientCredentialsHandler();
 
-        // Keep a reference on the http message handlers that will be created when instanciating the http clients
+        // Keep a reference on the http message handlers that will be created when instantiating the http clients
         var myTestApiHttpMessageHandlerInspector = EnableInternalHttpMessageHandlerInspection(services, "MyTestApi");
         var backchannelHttpMessageHandlerInspector = EnableInternalHttpMessageHandlerInspection(services, ClientCredentialsConstants.BackchannelHttpClientName);
 
         await using var serviceProvider = services.BuildServiceProvider();
 
-        // Instanciating http clients also instanciate the underlying http message handlers
+        // Instantiating http clients also instantiate the underlying http message handlers
         _ = serviceProvider.GetRequiredService<IHttpClientFactory>().CreateClient("MyTestApi");
         _ = serviceProvider.GetRequiredService<IHttpClientFactory>().CreateClient(ClientCredentialsConstants.BackchannelHttpClientName);
 
@@ -35,7 +35,7 @@ public class HttpClientBuilderExtensionsTests
         Assert.Equal(3, myTestApiHttpMessageHandlers.Length);
         Assert.IsType<ClientCredentialsTokenHttpMessageHandler>(myTestApiHttpMessageHandlers[0]);
         Assert.IsType<LoggingHttpMessageHandler>(myTestApiHttpMessageHandlers[1]);
-        Assert.IsType<HttpClientHandler>(myTestApiHttpMessageHandlers[2]);
+        Assert.IsType<SocketsHttpHandler>(myTestApiHttpMessageHandlers[2]);
 
         // The inspected handlers should be in this order: BackchannelRetryHttpMessageHandler, LoggingHttpMessageHandler then HttpClientHandler
         var backchannelHttpMessageHandlers = backchannelHttpMessageHandlerInspector.HttpMessageHandlers.ToArray();
@@ -43,7 +43,7 @@ public class HttpClientBuilderExtensionsTests
         Assert.Equal(3, backchannelHttpMessageHandlers.Length);
         Assert.IsType<BackchannelRetryHttpMessageHandler>(backchannelHttpMessageHandlers[0]);
         Assert.IsType<LoggingHttpMessageHandler>(backchannelHttpMessageHandlers[1]);
-        Assert.IsType<HttpClientHandler>(backchannelHttpMessageHandlers[2]);
+        Assert.IsType<SocketsHttpHandler>(backchannelHttpMessageHandlers[2]);
     }
 
     [Fact]
