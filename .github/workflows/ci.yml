@@ -30,7 +30,7 @@ jobs:
 
       - uses: workleap/wl-reusable-workflows/az-artifact-authenticate@main
         with:
-          feed-url: ${{ secrets.NUGET_GSOFTDEV_FEED_URL }}
+          feed-url: ${{ vars.GSOFTDEV_NUGET_SOURCE }}
           variables: ${{ toJSON(vars) }}
 
       - uses: actions/setup-dotnet@v4
@@ -40,4 +40,4 @@ jobs:
       - run: ./Build.ps1
         shell: pwsh
         env:
-          NUGET_SOURCE: ${{ secrets.NUGET_GSOFTDEV_FEED_URL }}
+          NUGET_SOURCE: ${{ vars.GSOFTDEV_NUGET_SOURCE }}
