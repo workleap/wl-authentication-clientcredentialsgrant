@@ -152,7 +152,6 @@ dotnet build -c Debug  # Includes automatic code analysis
 ## Repository Root Contents
 ```
 .
-..
 .editorconfig
 .git
 .gitattributes  
