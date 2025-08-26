@@ -189,8 +189,7 @@ tests/
 
 ### Successful test output summary
 ```
-Test summary: total: 76, failed: 0, succeeded: 76, skipped: 0, duration: 63.0s
-Build succeeded in 63.9s
+Test summary: failed: 0
 ```
 
 ### Demo API endpoints validation
