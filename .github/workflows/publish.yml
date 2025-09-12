@@ -31,8 +31,8 @@ jobs:
           keyvault-name: ${{ vars.IDP_CICD_KEYVAULT_NAME }}
           secret-name: "nuget-org-workleap-api-key"
           
-      - uses: actions/setup-dotnet@v4 # Install version declared in global.json
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5 # Install version declared in global.json
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: |
             8.0.x
