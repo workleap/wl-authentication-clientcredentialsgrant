@@ -100,7 +100,7 @@ public sealed partial class IntegrationTests(ITestOutputHelper testOutputHelper)
     public async Task GivenHttpEndpoint_WhenHttpsIsRequired_ThrowsClientCredentialsException()
     {
         var ex = await Assert.ThrowsAsync<ClientCredentialsException>(() => this._api1Client.GetStringAsync("http://invoice-app.local/anonymous", this._timeout.Token));
-        Assert.Equal("Due to security concerns, authenticated requests must be sent over HTTPS", ex.Message);
+        Assert.Equal("Due to security concerns, authenticated requests must be sent over HTTPS (request scheme: 'http'). You can disable the validation by setting EnforceHttps to false.", ex.Message);
     }
 
     [Fact]

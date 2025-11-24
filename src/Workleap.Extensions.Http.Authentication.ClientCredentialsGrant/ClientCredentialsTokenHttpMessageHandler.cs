@@ -1,4 +1,4 @@
-﻿// This file is based on https://github.com/DuendeSoftware/Duende.AccessTokenManagement/blob/1.1.0/src/Duende.AccessTokenManagement/ClientCredentialsTokenHandler.cs
+// This file is based on https://github.com/DuendeSoftware/Duende.AccessTokenManagement/blob/1.1.0/src/Duende.AccessTokenManagement/ClientCredentialsTokenHandler.cs
 // Copyright (c) Brock Allen & Dominick Baier, licensed under the Apache License, Version 2.0. All rights reserved.
 //
 // The original file has been significantly modified, and these modifications are Copyright (c) Workleap, 2023.
@@ -54,9 +54,9 @@ internal sealed class ClientCredentialsTokenHttpMessageHandler : PolicyHttpMessa
 
     private void EnsureRequestIsSentOverHttps(HttpRequestMessage request)
     {
-        if (this._options.EnforceHttps && request.RequestUri is { IsAbsoluteUri: true } requestUri && requestUri.Scheme != "https")
+        if (this._options.EnforceHttps && request.RequestUri is { IsAbsoluteUri: true } requestUri && !string.Equals(requestUri.Scheme, "https", StringComparison.OrdinalIgnoreCase))
         {
-            throw new ClientCredentialsException("Due to security concerns, authenticated requests must be sent over HTTPS");
+            throw new ClientCredentialsException($"Due to security concerns, authenticated requests must be sent over HTTPS (request scheme: '{requestUri.Scheme}'). You can disable the validation by setting {nameof(ClientCredentialsOptions.EnforceHttps)} to false.");
         }
     }
 
