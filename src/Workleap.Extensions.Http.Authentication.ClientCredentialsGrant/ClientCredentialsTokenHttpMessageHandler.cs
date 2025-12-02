@@ -40,7 +40,6 @@ internal sealed class ClientCredentialsTokenHttpMessageHandler : PolicyHttpMessa
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         this.EnsureRequestIsSentOverHttps(request);
-        using var activity = TracingHelper.StartAuthenticationActivity(this._options.ClientId);
         return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
     }
 

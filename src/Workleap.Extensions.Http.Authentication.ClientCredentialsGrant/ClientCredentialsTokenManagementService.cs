@@ -1,4 +1,4 @@
-﻿// This file is based on https://github.com/DuendeSoftware/Duende.AccessTokenManagement/blob/1.1.0/src/Duende.AccessTokenManagement/ClientCredentialsTokenManagementService.cs
+// This file is based on https://github.com/DuendeSoftware/Duende.AccessTokenManagement/blob/1.1.0/src/Duende.AccessTokenManagement/ClientCredentialsTokenManagementService.cs
 // Copyright (c) Brock Allen & Dominick Baier, licensed under the Apache License, Version 2.0. All rights reserved.
 //
 // The original file has been significantly modified, and these modifications are Copyright (c) Workleap, 2023.
@@ -81,6 +81,8 @@ internal class ClientCredentialsTokenManagementService : IClientCredentialsToken
 
     private Func<Task<ClientCredentialsToken>> GetNewTokenTaskFactory(string clientName, CancellationToken cancellationToken) => async () =>
     {
+        using var activity = TracingHelper.StartAuthenticationActivity(this._optionsMonitor.Get(clientName).ClientId);
+
         var newToken = await this._tokenEndpointService.RequestTokenAsync(clientName, cancellationToken).ConfigureAwait(false);
 
         var cacheAbsoluteExpiration = await this._tokenCache.SetAsync(clientName, newToken, cancellationToken).ConfigureAwait(false);
