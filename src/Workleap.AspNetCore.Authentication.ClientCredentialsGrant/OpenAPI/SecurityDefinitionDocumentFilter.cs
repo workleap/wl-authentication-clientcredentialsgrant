@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Workleap.AspNetCore.Authentication.ClientCredentialsGrant.OpenAPI;
@@ -16,7 +16,7 @@ internal sealed class SecurityDefinitionDocumentFilter(IOptionsMonitor<JwtBearer
     {
         var apiPermissions = context.ApiDescriptions.SelectMany(SwaggerUtils.GetRequiredPermissions).ToHashSet(StringComparer.Ordinal);
 
-        swaggerDoc.Components.SecuritySchemes.Add(
+        swaggerDoc.Components?.SecuritySchemes?.Add(
             ClientCredentialsDefaults.OpenApiSecurityDefinitionId,
             new OpenApiSecurityScheme
             {
