@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Workleap.AspNetCore.Authentication.ClientCredentialsGrant.OpenAPI;
@@ -32,30 +32,23 @@ internal sealed class SecurityRequirementOperationFilter(IOptionsMonitor<JwtBear
 
     private static void AddAuthenticationAndAuthorizationErrorResponse(OpenApiOperation operation)
     {
-        operation.Responses.TryAdd(StatusCodes.Status401Unauthorized.ToString(CultureInfo.InvariantCulture), new OpenApiResponse { Description = ReasonPhrases.GetReasonPhrase(StatusCodes.Status401Unauthorized) });
-        operation.Responses.TryAdd(StatusCodes.Status403Forbidden.ToString(CultureInfo.InvariantCulture), new OpenApiResponse { Description = ReasonPhrases.GetReasonPhrase(StatusCodes.Status403Forbidden) });
+        operation.Responses?.TryAdd(StatusCodes.Status401Unauthorized.ToString(CultureInfo.InvariantCulture), new OpenApiResponse { Description = ReasonPhrases.GetReasonPhrase(StatusCodes.Status401Unauthorized) });
+        operation.Responses?.TryAdd(StatusCodes.Status403Forbidden.ToString(CultureInfo.InvariantCulture), new OpenApiResponse { Description = ReasonPhrases.GetReasonPhrase(StatusCodes.Status403Forbidden) });
     }
 
     private void AddOperationSecurityReference(OpenApiOperation operation, HashSet<string> permissions)
     {
-        var isAlreadyReferencingSecurityDefinition = operation.Security.Any(requirement => requirement.Keys.Any(key => key.Reference?.Id == ClientCredentialsDefaults.OpenApiSecurityDefinitionId));
+        var isAlreadyReferencingSecurityDefinition = operation.Security?.Any(requirement => requirement.Keys.Any(key => key.Reference?.Id == ClientCredentialsDefaults.OpenApiSecurityDefinitionId)) ?? false;
         if (isAlreadyReferencingSecurityDefinition)
         {
             return;
         }
 
-        var securityScheme = new OpenApiSecurityScheme
-        {
-            Reference = new OpenApiReference
-            {
-                Type = ReferenceType.SecurityScheme,
-                Id = ClientCredentialsDefaults.OpenApiSecurityDefinitionId,
-            },
-        };
+        var securitySchemeRef = new OpenApiSecuritySchemeReference(ClientCredentialsDefaults.OpenApiSecurityDefinitionId);
 
-        operation.Security.Add(new OpenApiSecurityRequirement
+        operation.Security?.Add(new OpenApiSecurityRequirement
         {
-            [securityScheme] = this.ExtractScopes(permissions).ToList(),
+            [securitySchemeRef] = this.ExtractScopes(permissions).ToList(),
         });
     }
 
