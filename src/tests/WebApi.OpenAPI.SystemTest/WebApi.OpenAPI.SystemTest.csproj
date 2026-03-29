@@ -6,8 +6,8 @@
     </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.5" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="10.1.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="10.1.7" />
     <PackageReference Include="Workleap.OpenApi.MSBuild" Version="1.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
