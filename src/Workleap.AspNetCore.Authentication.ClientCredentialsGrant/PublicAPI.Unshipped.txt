@@ -1,1 +1,3 @@
 #nullable enable
+Workleap.AspNetCore.Authentication.ClientCredentialsGrant.RequireClientCredentialsRequirement
+Workleap.AspNetCore.Authentication.ClientCredentialsGrant.RequireClientCredentialsRequirement.RequireClientCredentialsRequirement() -> void
