@@ -24,7 +24,7 @@ jobs:
     runs-on: [idp]
     environment: ci
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -33,7 +33,7 @@ jobs:
           feed-url: ${{ vars.GSOFTDEV_NUGET_SOURCE }}
           variables: ${{ toJSON(vars) }}
 
-      - uses: actions/setup-dotnet@v5
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: "8.0.x"
 
